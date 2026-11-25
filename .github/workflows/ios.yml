@@ -1,0 +1,105 @@
+name: Compiler l'IPA iOS
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: build-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  ios:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Installer les dépendances
+        run: npm ci
+
+      - name: Construire l'appli web
+        run: npm run build
+
+      - name: Créer le projet iOS
+        run: npx cap add ios
+
+      - name: Générer l'icône
+        continue-on-error: true
+        run: npx @capacitor/assets generate --ios --iconBackgroundColor '#0b0c0f' --splashBackgroundColor '#0b0c0f'
+
+      - name: Synchroniser
+        run: npx cap sync ios
+
+      - name: Réglages Info.plist (nom, portrait, version)
+        run: |
+          PL=ios/App/App/Info.plist
+          VERSION=$(node -p "require('./package.json').version")
+          pb() { /usr/libexec/PlistBuddy -c "$1" "$PL" || true; }
+          pb "Set :CFBundleDisplayName Lumio Kettle"
+          pb "Set :CFBundleShortVersionString $VERSION"
+          pb "Set :CFBundleVersion ${{ github.run_number }}"
+          pb "Delete :UISupportedInterfaceOrientations"
+          pb "Add :UISupportedInterfaceOrientations array"
+          pb "Add :UISupportedInterfaceOrientations:0 string UIInterfaceOrientationPortrait"
+          pb "Delete :UIStatusBarStyle"
+          pb "Add :UIStatusBarStyle string UIStatusBarStyleLightContent"
+          pb "Delete :UIViewControllerBasedStatusBarAppearance"
+          pb "Add :UIViewControllerBasedStatusBarAppearance bool false"
+          pb "Add :ITSAppUsesNonExemptEncryption bool false"
+
+      - name: Compiler (sans signature, FlareStore signe à l'installation)
+        run: |
+          if [ -d ios/App/App.xcworkspace ]; then
+            TARGET="-workspace ios/App/App.xcworkspace"
+          else
+            TARGET="-project ios/App/App.xcodeproj"
+          fi
+          xcodebuild $TARGET -scheme App -configuration Release \
+            -sdk iphoneos -destination 'generic/platform=iOS' \
+            -derivedDataPath build \
+            CODE_SIGNING_ALLOWED=NO CODE_SIGNING_REQUIRED=NO CODE_SIGN_IDENTITY="" \
+            build > xcodebuild.log 2>&1 || {
+              grep -E "error:|\*\* BUILD FAILED" xcodebuild.log | sort -u | head -30 | while IFS= read -r l; do echo "::error::$l"; done
+              tail -n 80 xcodebuild.log
+              exit 1
+            }
+          tail -n 20 xcodebuild.log
+          mkdir -p Payload
+          cp -R build/Build/Products/Release-iphoneos/App.app Payload/
+          zip -qry lumio-kettle-unsigned.ipa Payload
+          size=$(stat -f %z lumio-kettle-unsigned.ipa)
+          echo "IPA : $size octets"
+          if [ "$size" -lt 1000000 ]; then echo "::error::IPA anormalement petite"; exit 1; fi
+
+      - name: Source FlareStore / SideStore
+        run: node scripts/make-source.mjs "1.0.${{ github.run_number }}" "build-${{ github.run_number }}" lumio-kettle-unsigned.ipa
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: ios
+          path: |
+            lumio-kettle-unsigned.ipa
+            altstore.json
+
+      - name: Publier la release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: build-${{ github.run_number }}
+          name: Lumio Kettle 1.0.${{ github.run_number }}
+          target_commitish: ${{ github.sha }}
+          make_latest: true
+          body: |
+            Source FlareStore / SideStore : https://github.com/${{ github.repository }}/releases/latest/download/altstore.json
+            Ou installe lumio-kettle-unsigned.ipa avec Sideloadly / SideStore.
+          files: |
+            lumio-kettle-unsigned.ipa
+            altstore.json

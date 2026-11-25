@@ -1,0 +1,9 @@
+{
+  "appId": "lol.wawanono.lumiokettle",
+  "appName": "Lumio Kettle",
+  "webDir": "dist",
+  "ios": {
+    "contentInset": "never",
+    "backgroundColor": "#0b0c0f"
+  }
+}
