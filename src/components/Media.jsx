@@ -1,7 +1,10 @@
 import { useState } from 'react';
-import { Capacitor } from '@capacitor/core';
-import { Browser } from '@capacitor/browser';
-import { ytThumb, ytWatch } from '../data/exercises.js';
+import { ytThumb } from '../data/exercises.js';
+
+// Lecteur hébergé sur GitHub Pages (branche gh-pages, source : player/index.html).
+// YouTube refuse de se lancer directement dans une appli maison (erreur 153),
+// alors on passe par cette petite page https qui contient le lecteur YouTube.
+const PLAYER_URL = 'https://nono7444.github.io/lumio-kettle/';
 
 export const parseYouTubeId = (input) => {
   if (!input) return null;
@@ -11,48 +14,45 @@ export const parseYouTubeId = (input) => {
   return m ? m[1] : null;
 };
 
-export async function openVideo(id, name) {
-  const url = ytWatch(id, name);
-  if (Capacitor.isNativePlatform()) {
-    await Browser.open({ url, presentationStyle: 'popover' });
-  } else {
-    window.open(url, '_blank', 'noopener');
-  }
-}
-
-// Vignette de la vidéo + lecture.
-// Sur iPhone la vidéo s'ouvre dans un lecteur intégré à l'appli (YouTube refuse
-// les lecteurs embarqués dans les applis maison) ; sur navigateur elle se lit sur place.
-export function VideoCard({ id, name, compact = false }) {
-  const [inline, setInline] = useState(false);
-  const native = Capacitor.isNativePlatform();
-  const thumb = ytThumb(id);
-
-  if (inline && id && !native) {
-    return (
-      <div className={`video ${compact ? 'compact' : ''}`}>
+// Lecteur plein écran, dans l'appli, qui démarre tout de suite
+export function VideoModal({ id, name, onClose }) {
+  return (
+    <div className="video-modal" onClick={onClose}>
+      <div className="video-modal-top">
+        <span>{name}</span>
+        <button className="icon-btn" onClick={onClose} aria-label="Fermer">✕</button>
+      </div>
+      <div className="video-modal-frame" onClick={(e) => e.stopPropagation()}>
         <iframe
-          src={`https://www.youtube-nocookie.com/embed/${id}?autoplay=1&playsinline=1&rel=0`}
+          src={`${PLAYER_URL}?v=${id}`}
           title={name}
-          allow="autoplay; encrypted-media; picture-in-picture"
-          referrerPolicy="strict-origin-when-cross-origin"
+          allow="autoplay; encrypted-media; picture-in-picture; fullscreen"
           allowFullScreen
         />
       </div>
-    );
-  }
+      <div className="muted small center">Touche en dehors de la vidéo pour fermer</div>
+    </div>
+  );
+}
+
+// Vignette : un appui = la vidéo se lance directement dans l'appli
+export function VideoCard({ id, name, compact = false }) {
+  const [open, setOpen] = useState(false);
+  const thumb = ytThumb(id);
 
   return (
-    <button
-      type="button"
-      className={`video ${compact ? 'compact' : ''}`}
-      onClick={() => (id && !native ? setInline(true) : openVideo(id, name))}
-      aria-label={`Voir la vidéo : ${name}`}
-    >
-      <div className="video-ph">🎬</div>
-      {thumb && <img src={thumb} alt="" loading="lazy" onError={(e) => { e.currentTarget.style.display = 'none'; }} />}
-      <span className="play">▶</span>
-      {!id && <span className="video-tag">Chercher sur YouTube</span>}
-    </button>
+    <>
+      <button
+        type="button"
+        className={`video ${compact ? 'compact' : ''}`}
+        onClick={(e) => { e.stopPropagation(); if (id) setOpen(true); }}
+        aria-label={`Voir la vidéo : ${name}`}
+      >
+        <div className="video-ph">🎬</div>
+        {thumb && <img src={thumb} alt="" loading="lazy" onError={(e) => { e.currentTarget.style.display = 'none'; }} />}
+        {id ? <span className="play">▶</span> : <span className="video-tag">Pas de vidéo</span>}
+      </button>
+      {open && <VideoModal id={id} name={name} onClose={() => setOpen(false)} />}
+    </>
   );
 }
