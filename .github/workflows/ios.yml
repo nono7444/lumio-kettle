@@ -42,10 +42,9 @@ jobs:
       - name: Réglages Info.plist (nom, portrait, version)
         run: |
           PL=ios/App/App/Info.plist
-          VERSION=$(node -p "require('./package.json').version")
           pb() { /usr/libexec/PlistBuddy -c "$1" "$PL" || true; }
           pb "Set :CFBundleDisplayName Lumio Kettle"
-          pb "Set :CFBundleShortVersionString $VERSION"
+          pb "Set :CFBundleShortVersionString 1.0.${{ github.run_number }}"
           pb "Set :CFBundleVersion ${{ github.run_number }}"
           pb "Delete :UISupportedInterfaceOrientations"
           pb "Add :UISupportedInterfaceOrientations array"
