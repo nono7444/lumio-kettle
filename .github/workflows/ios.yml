@@ -78,7 +78,10 @@ jobs:
           zip -qry lumio-kettle-unsigned.ipa Payload
           size=$(stat -f %z lumio-kettle-unsigned.ipa)
           echo "IPA : $size octets"
-          if [ "$size" -lt 1000000 ]; then echo "::error::IPA anormalement petite"; exit 1; fi
+          du -sh Payload/App.app; ls Payload/App.app | head -30
+          # Vérifie que l'appli contient bien l'exécutable et les fichiers web
+          [ -f Payload/App.app/App ] || { echo "::error::Exécutable manquant dans App.app"; exit 1; }
+          [ -f Payload/App.app/public/index.html ] || { echo "::error::Fichiers web manquants (public/index.html)"; exit 1; }
 
       - name: Source FlareStore / SideStore
         run: node scripts/make-source.mjs "1.0.${{ github.run_number }}" "build-${{ github.run_number }}" lumio-kettle-unsigned.ipa
