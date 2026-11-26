@@ -23,6 +23,7 @@ export const EXERCISES = {
     yt: 'LEjVh4scVy4',
     load: 'haut',
     cues: [
+      'Pieds largeur de hanches',
       'Kettlebell tenue par les cornes, à l’envers, devant la poitrine',
       'Fais le tour de la tête, au plus près, coudes serrés',
       'Abdos et fessiers serrés : le bassin ne bouge pas',
@@ -35,6 +36,7 @@ export const EXERCISES = {
     yt: '9eVB3V3YFcg',
     load: null,
     cues: [
+      'Pieds largeur de hanches',
       'Mains sur les hanches, genoux légèrement fléchis',
       'Pousse les fesses en arrière comme pour fermer une porte',
       'Dos plat, buste qui descend vers 45°',
@@ -47,6 +49,7 @@ export const EXERCISES = {
     yt: 'nQKgHwi8W9E',
     load: null,
     cues: [
+      'Pieds largeur de hanches',
       'Dos et fesses contre un mur, pieds 30 cm devant',
       'Relève les pointes de pieds le plus haut possible',
       'Redescends lentement sans claquer',
@@ -59,6 +62,7 @@ export const EXERCISES = {
     yt: 'BSwxaWsvBjo',
     load: null,
     cues: [
+      'Pieds largeur de hanches',
       'Mains au mur, monte sur la pointe en 1 s',
       'Tiens 1 s en haut, redescends en 3 s',
       'Garde le poids sur le gros orteil',
@@ -85,6 +89,7 @@ export const EXERCISES = {
     yt: '-N4NjwW7bGA',
     load: 'bas',
     cues: [
+      'Pieds un peu plus larges que les hanches, pointes légèrement ouvertes',
       'Kettlebell entre les pieds, au niveau du milieu du pied',
       'Fesses en arrière, dos plat, épaules au-dessus de la cloche',
       'Pousse le sol et serre les fessiers en haut',
@@ -97,6 +102,7 @@ export const EXERCISES = {
     yt: 'Yao9ShODVZA',
     load: 'bas',
     cues: [
+      'Pieds à plat, largeur de hanches, talons près des fesses',
       'Sur le dos, pieds à plat, kettlebell posée sur le bassin',
       'Pousse dans les talons, monte le bassin',
       'Tiens 2 s en haut en serrant les fessiers',
@@ -110,6 +116,7 @@ export const EXERCISES = {
     load: 'bas',
     side: true,
     cues: [
+      'Départ pieds largeur de hanches',
       'Kettlebell contre la poitrine',
       'Grand pas en arrière, genou arrière qui frôle le sol',
       'Le poids reste sur le talon de la jambe avant',
@@ -123,6 +130,7 @@ export const EXERCISES = {
     load: 'bas',
     side: true,
     cues: [
+      'Debout sur une jambe, l’autre pied juste à côté au départ',
       'Kettlebell dans la main opposée à la jambe d’appui',
       'Penche-toi, la jambe libre part en arrière bien droite',
       'Hanches parallèles au sol, dos plat',
@@ -135,6 +143,7 @@ export const EXERCISES = {
     yt: 'pAWaNCsncZA',
     load: 'bas',
     cues: [
+      'Pieds un peu plus larges que les épaules, pointes légèrement ouvertes',
       'C’est une charnière, pas un squat : fesses en arrière',
       'Lance la kettlebell avec un coup de hanches sec',
       'Les bras ne tirent pas, ils guident – hauteur de poitrine',
@@ -148,6 +157,7 @@ export const EXERCISES = {
     load: 'bas',
     side: true,
     cues: [
+      'Pieds un peu plus larges que les épaules',
       'Même mouvement que le swing deux mains',
       'Épaule basse et rangée, le buste ne tourne pas',
       'La main libre suit le mouvement ou reste sur le côté',
@@ -162,6 +172,7 @@ export const EXERCISES = {
     load: 'haut',
     side: true,
     cues: [
+      'Pieds à plat, largeur de hanches',
       'Sur le dos, genoux fléchis, coude posé au sol à 45°',
       'Poignet droit, la cloche repose sur l’avant-bras',
       'Pousse vers le plafond, verrouille le bras',
@@ -188,6 +199,7 @@ export const EXERCISES = {
     load: 'haut',
     side: true,
     cues: [
+      'Pieds largeur de hanches',
       'Kettlebell en position rack : contre l’épaule, poignet droit',
       'Fessiers et abdos serrés, pas de cambrure',
       'Pousse droit au-dessus, biceps près de l’oreille',
@@ -201,6 +213,7 @@ export const EXERCISES = {
     load: 'haut',
     side: true,
     cues: [
+      'Pieds largeur d’épaules',
       'Petit swing puis ramène la kettlebell en rack, coude collé',
       'La cloche s’enroule autour du poignet : elle ne doit pas taper',
       'Développé au-dessus de la tête, puis retour rack',
@@ -214,6 +227,7 @@ export const EXERCISES = {
     load: 'haut',
     side: true,
     cues: [
+      'Pieds largeur d’épaules',
       'Départ comme un swing une main',
       'En haut, tire le coude vers l’arrière, à hauteur d’épaule',
       'Poignet neutre, la kettlebell reste près du corps',
@@ -226,6 +240,7 @@ export const EXERCISES = {
     yt: 'WDIpL0pjun0',
     load: null,
     cues: [
+      'Pieds largeur de hanches',
       'Mains sur une chaise, un canapé ou un plan de travail',
       'Corps gainé et aligné de la tête aux talons',
       'Coudes à 45° du corps, pas en croix',
@@ -238,6 +253,7 @@ export const EXERCISES = {
     yt: 'WDIpL0pjun0',
     load: null,
     cues: [
+      'Pieds largeur de hanches',
       'Mains un peu plus larges que les épaules',
       'Gainé de la tête aux talons, fessiers serrés',
       'Descends la poitrine à 2 cm du sol, coudes à 45°',
@@ -277,6 +293,7 @@ export const EXERCISES = {
     load: 'bas',
     side: true,
     cues: [
+      'Pieds sous les hanches, marche normale',
       'Kettlebell dans une main, le long du corps',
       'Marche lentement, grand et droit, sans pencher',
       'Épaules à la même hauteur',
@@ -301,6 +318,7 @@ export const EXERCISES = {
     yt: 'PkGPokybYaU',
     load: null,
     cues: [
+      'Pieds à plat, largeur de hanches',
       'Assis, pieds au sol, buste penché en arrière dos droit',
       'Kettlebell tenue contre la poitrine',
       'Tourne les épaules d’un côté puis de l’autre',
@@ -328,6 +346,7 @@ export const EXERCISES = {
     yt: 'ew84D9HO_3I',
     load: null,
     cues: [
+      'Pieds largeur de hanches',
       'Mains au sol, recule un pied puis l’autre',
       'Option : une pompe',
       'Ramène les pieds un par un, relève-toi',
@@ -341,6 +360,7 @@ export const EXERCISES = {
     load: null,
     impact: true,
     cues: [
+      'Pieds largeur de hanches',
       'Mains au sol, saute les pieds en arrière en planche',
       'Ramène les pieds, relève-toi',
       'Petit saut en haut, réception souple sur l’avant du pied',
@@ -354,6 +374,7 @@ export const EXERCISES = {
     load: null,
     impact: true,
     cues: [
+      'Pieds serrés, presque collés',
       'Sauts très bas : 1 à 2 cm suffisent',
       'Réception sur l’avant du pied, genoux souples',
       'Coudes près du corps, ce sont les poignets qui tournent',
@@ -366,6 +387,7 @@ export const EXERCISES = {
     yt: 'Y3wzaWE9QRY',
     load: null,
     cues: [
+      'Pieds serrés, presque collés',
       'Tiens les poignées sans corde (ou corde pliée dans une main)',
       'Fais tourner les poignets en sautillant sur place SANS décoller',
       'Pointes de pieds au sol, talons qui montent à peine',

@@ -27,16 +27,20 @@ for (const [id, anim] of Object.entries(ANIMS)) {
     const ezN = pose.ezN ?? (SH_W + hzN) / 2 + (twoHands ? 7 : 2);
     const ezF = pose.ezF ?? (-SH_W + hzF) / 2 - (twoHands ? 7 : 2);
     const p3 = (p, z) => [+p[0].toFixed(2), +p[1].toFixed(2), +z.toFixed(2)];
-    const fzN = pose.fzN ?? HIP_W;
-    const fzF = pose.fzF ?? -HIP_W;
+    // Écart des pieds propre à chaque exercice (demi-écart en cm) et pointes ouvertes
+    const stance = anim.stance ?? 13;
+    const flare = anim.flare ?? 2;
+    const fzN = pose.fzN ?? stance;
+    const fzF = pose.fzF ?? -stance;
+    const kz = (fz, sgn) => sgn * HIP_W + (fz - sgn * HIP_W) * 0.85; // genoux dans l'axe des pieds
     const fr = {
       pelvis: p3(s.hip, 0),
       hipR: p3(s.hip, HIP_W), hipL: p3(s.hip, -HIP_W),
       chest: p3(s.sh, 0),
       shR: p3(s.sh, SH_W), shL: p3(s.sh, -SH_W),
       neck: p3(s.neck, 0), head: p3(s.head, 0),
-      kneeR: p3(s.legN.knee, (HIP_W + fzN) / 2), ankleR: p3(s.legN.ankle, fzN), toeR: p3(s.legN.toe, fzN),
-      kneeL: p3(s.legF.knee, (-HIP_W + fzF) / 2), ankleL: p3(s.legF.ankle, fzF), toeL: p3(s.legF.toe, fzF),
+      kneeR: p3(s.legN.knee, kz(fzN, 1)), ankleR: p3(s.legN.ankle, fzN), toeR: p3(s.legN.toe, fzN + flare),
+      kneeL: p3(s.legF.knee, kz(fzF, -1)), ankleL: p3(s.legF.ankle, fzF), toeL: p3(s.legF.toe, fzF - flare),
       elbowR: p3(s.armN.elbow, ezN), handR: p3(s.armN.hand, hzN),
       elbowL: p3(s.armF.elbow, ezF), handL: p3(s.armF.hand, hzF),
       faceDir: +(pose.torso + (pose.headTilt || 0)).toFixed(2),
