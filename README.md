@@ -37,3 +37,12 @@ npm run check    # vérifie la durée de chaque séance
 ## Où modifier
 - `src/data/program.js` : les séances, les durées, les tests de palier
 - `src/data/exercises.js` : les exercices, explications et vidéos
+
+## Refaire les vidéos des exercices (Blender)
+Les vidéos de `public/anims/` sont rendues avec Blender à partir des mouvements de `src/anim/library.js` :
+```bash
+pip install bpy                      # Blender en module Python
+node scripts/export-frames.mjs       # positions 3D image par image
+python3 scripts/blender/render.py    # rendu (≈ 1 h)  — ajouter un id pour un seul exercice
+./scripts/blender/encode.sh          # .mp4 + image d'aperçu
+```
