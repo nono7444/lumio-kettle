@@ -6,6 +6,7 @@ import { loadSync, loadNative, save, DEFAULT_STATE } from './lib/storage.js';
 import { configureAudio, unlockAudio, speak } from './lib/audio.js';
 import Player from './components/Player.jsx';
 import ExerciseSheet from './components/ExerciseSheet.jsx';
+import ExerciseAnim from './components/ExerciseAnim.jsx';
 
 const minutes = (s, noImpact) => Math.round(totalSeconds(buildTimeline(s, { noImpact })) / 60);
 
@@ -95,7 +96,7 @@ export default function App() {
               const ex = resolveEx(i.ex, noImpact);
               return (
                 <button key={k} className="ex-row" onClick={() => setSheet(ex)}>
-                  <Thumb id={state.videos[ex.id] || ex.yt} />
+                  <Thumb id={ex.id} />
                   <div className="ex-row-txt">
                     <div>{ex.name}</div>
                     <div className="muted small">
@@ -148,12 +149,7 @@ export default function App() {
 }
 
 function Thumb({ id }) {
-  return (
-    <div className="thumb">
-      <span>🎬</span>
-      {id && <img src={`https://i.ytimg.com/vi/${id}/mqdefault.jpg`} alt="" loading="lazy" onError={(e) => { e.currentTarget.style.display = 'none'; }} />}
-    </div>
-  );
+  return <ExerciseAnim id={id} still className="thumb-anim" />;
 }
 
 function Programme({ state, nextSession, doneCount, open, openTest }) {
@@ -310,7 +306,7 @@ function Library({ state, onOpen }) {
             const ex = { id, ...EXERCISES[id] };
             return (
               <button key={id} className="ex-row" onClick={() => onOpen(ex)}>
-                <Thumb id={state.videos[id] || ex.yt} />
+                <Thumb id={id} />
                 <div className="ex-row-txt">
                   <div>{ex.name}{ex.impact ? ' ⚠️' : ''}</div>
                   <div className="muted small">{ex.muscles}</div>

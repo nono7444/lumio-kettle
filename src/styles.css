@@ -147,13 +147,13 @@ p { margin: 8px 0; }
 .player-meta .bar > div { background: var(--c); }
 .icon-btn { width: 40px; height: 40px; border-radius: 50%; background: var(--card2); display: grid; place-items: center; font-size: 16px; flex: none; }
 .icon-btn.ghost { background: none; }
-.phase-label { text-align: center; font-weight: 900; letter-spacing: 0.25em; color: var(--c); margin: 16px 0 0; font-size: 15px; }
-.ring-wrap { position: relative; width: min(72vw, 300px); aspect-ratio: 1; margin: 6px auto 4px; }
+.phase-label { text-align: center; font-weight: 900; letter-spacing: 0.25em; color: var(--c); margin: 10px 0 0; font-size: 14px; }
+.ring-wrap { position: relative; width: min(44vw, 180px); aspect-ratio: 1; margin: 6px auto 4px; }
 .ring { width: 100%; height: 100%; transform: rotate(-90deg); }
 .ring-bg { fill: none; stroke: var(--card2); stroke-width: 14; }
 .ring-fg { fill: none; stroke: var(--c); stroke-width: 14; stroke-linecap: round; transition: stroke-dashoffset .1s linear; }
 .ring-center { position: absolute; inset: 0; display: grid; place-content: center; text-align: center; }
-.time { font-size: clamp(76px, 24vw, 112px); font-weight: 800; font-variant-numeric: tabular-nums; letter-spacing: -0.04em; line-height: 1; }
+.time { font-size: clamp(54px, 15vw, 70px); font-weight: 800; font-variant-numeric: tabular-nums; letter-spacing: -0.04em; line-height: 1; }
 .paused { color: var(--muted); font-weight: 700; letter-spacing: .15em; font-size: 13px; margin-top: 6px; }
 .now { text-align: center; flex: 1; }
 .now-name { font-size: clamp(26px, 8vw, 34px); font-weight: 800; letter-spacing: -0.02em; text-align: center; width: 100%; line-height: 1.15; }
@@ -170,3 +170,13 @@ p { margin: 8px 0; }
 .video-modal-top { position: absolute; top: calc(var(--safe-top) + 10px); left: 16px; right: 16px; display: flex; justify-content: space-between; align-items: center; font-weight: 700; }
 .video-modal-frame { width: 100%; aspect-ratio: 16/9; background: #000; }
 .video-modal-frame iframe { width: 100%; height: 100%; border: 0; display: block; }
+
+/* Animations d'exercices */
+.anim { width: 100%; aspect-ratio: 4/3; background: #101217; border: 1px solid var(--line); border-radius: 14px; display: grid; place-items: center; overflow: hidden; }
+.anim svg { width: 100%; height: 100%; display: block; }
+.anim.thumb-anim { width: 72px; height: 54px; aspect-ratio: auto; border-radius: 9px; flex: none; }
+.anim.player-anim { max-width: 340px; margin: 10px auto 6px; }
+.yt-link { display: inline-flex; gap: 6px; align-items: center; color: var(--muted); font-size: 14px; padding: 8px 0; }
+
+.cues.compact.left { text-align: left; max-width: 340px; margin: 6px auto 0; }
+.ring-fg { stroke-width: 16; }

@@ -1,9 +1,9 @@
 import { useState } from 'react';
-import { VideoCard, parseYouTubeId } from './Media.jsx';
+import { VideoModal } from './Media.jsx';
+import ExerciseAnim from './ExerciseAnim.jsx';
 
-export default function ExerciseSheet({ ex, weight, customId, onSetVideo, onClose }) {
-  const [editing, setEditing] = useState(false);
-  const [val, setVal] = useState('');
+export default function ExerciseSheet({ ex, weight, customId, onClose }) {
+  const [yt, setYt] = useState(false);
   const id = customId || ex.yt;
 
   return (
@@ -17,38 +17,15 @@ export default function ExerciseSheet({ ex, weight, customId, onSetVideo, onClos
           {ex.side && <span className="tag">↔️ Chaque côté</span>}
           {ex.impact && <span className="tag warn">⚠️ Impact</span>}
         </div>
-        <VideoCard id={id} name={ex.name} />
+        <ExerciseAnim id={ex.id} />
         <h3>Points clés</h3>
         <ol className="cues">
           {ex.cues.map((c) => <li key={c}>{c}</li>)}
         </ol>
-
-        {editing ? (
-          <div className="edit-video">
-            <input
-              placeholder="Colle un lien YouTube"
-              value={val}
-              onChange={(e) => setVal(e.target.value)}
-              autoFocus
-            />
-            <button
-              className="btn small"
-              onClick={() => {
-                const parsed = parseYouTubeId(val);
-                if (parsed) { onSetVideo(parsed); setEditing(false); }
-              }}
-            >OK</button>
-            {customId && (
-              <button className="btn small ghost" onClick={() => { onSetVideo(null); setEditing(false); }}>
-                Vidéo d’origine
-              </button>
-            )}
-          </div>
-        ) : (
-          <button className="link" onClick={() => setEditing(true)}>Changer la vidéo</button>
-        )}
+        {id && <button className="yt-link" onClick={() => setYt(true)}>▶ Vidéo complète (YouTube)</button>}
         <button className="btn full" onClick={onClose}>Fermer</button>
       </div>
+      {yt && <VideoModal id={id} name={ex.name} onClose={() => setYt(false)} />}
     </div>
   );
 }

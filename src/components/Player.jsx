@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { buildTimeline, fmt, totalSeconds } from '../lib/timeline.js';
 import { beep, speak, stopSpeech, keepScreenOn, unlockAudio } from '../lib/audio.js';
-import { VideoCard } from './Media.jsx';
+import ExerciseAnim from './ExerciseAnim.jsx';
 import ExerciseSheet from './ExerciseSheet.jsx';
 
 const sideLabel = (s) => (s === 'gauche' ? 'Côté gauche' : s === 'droite' ? 'Côté droit' : '');
@@ -180,13 +180,11 @@ export default function Player({ session, state, onFinish, onQuit, onSetVideo })
             {w && <span className="tag big">{w} kg</span>}
           </div>
           {(isWork ? step.hint : null) && <div className="hint">{step.hint}</div>}
-          {(
-            <div className="rest-preview">
-              <VideoCard id={videos[showEx.id] || showEx.yt} name={showEx.name} compact />
-              <ul className="cues compact">
-                {showEx.cues.slice(0, isWork ? 2 : 3).map((c) => <li key={c}>{c}</li>)}
-              </ul>
-            </div>
+          <ExerciseAnim id={showEx.id} className="player-anim" />
+          {!isWork && (
+            <ul className="cues compact left">
+              {showEx.cues.slice(0, 3).map((c) => <li key={c}>{c}</li>)}
+            </ul>
           )}
         </div>
       )}
